@@ -21,7 +21,7 @@ public:
 	bool windowIsOpen()const;
 	void iniwindow();
 	//===========================
-	// 
+			
 	//Incharg on the events
 	void pollEvent();
 
