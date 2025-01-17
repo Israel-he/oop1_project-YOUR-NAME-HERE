@@ -1,6 +1,6 @@
 #include "LoadTexture.h"
 
-LaodTexture::LaodTexture()
+LoadTexture::LoadTexture()
 {
 	m_robot.loadFromFile("robot.jpg");
 	m_guard.loadFromFile("guard.jpg");
@@ -9,7 +9,7 @@ LaodTexture::LaodTexture()
 	m_door.loadFromFile("door.jpg");
 }
 
-sf::Texture& LaodTexture::getTexture(const char symbol)
+sf::Texture& LoadTexture::getTexture(const char symbol)
 {
     switch (symbol)
     {

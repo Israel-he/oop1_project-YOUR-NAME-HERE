@@ -5,6 +5,6 @@ int main()
 		while (b.windowIsOpen())
 		{
 			b.render();
-			//b.update();
+			b.update();
 		}
 }
