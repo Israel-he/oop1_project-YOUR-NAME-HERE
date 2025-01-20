@@ -1,3 +1,4 @@
+#pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -11,7 +12,9 @@ class Robot :public GameObject
 public:
     Robot(sf::Vector2f position,const char type);
 
-	  void move(sf::Event& event, float m_deltaTime);
+	virtual void draw(sf::RenderWindow& window) override;
+
+	void move(sf::Event& event, float m_deltaTime);
 
 	//point==================
 	void setPoint(int point);
@@ -22,24 +25,24 @@ public:
 	void setPosition(sf::Vector2f position);
 	sf::Vector2f getPosition();
 	//=========================
+
 	void resetClock();
-	//virtual void draw(sf::RenderWindow& window) override;
+
+	 
 
 private:
 
 	//sf::Vector2f m_position;
 
 	sf::Clock m_time;
-
 	int m_point;
-
 	sf::Event m_event;
-
+	const float moveSpeed = 150.f;
 	//sf::Texture m_TxtRobot;
 	//sf::Sprite m_robot;
 
    //The speed and time of the robot
-   const float moveSpeed = 100.f;
+   
 };
 
  

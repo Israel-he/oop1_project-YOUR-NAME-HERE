@@ -13,7 +13,6 @@ public:
 	sf::Texture& getTexture(const char symbol);
 
 private:
-
 	sf::Texture m_robot;
 	sf::Texture m_guard;
 	sf::Texture m_Wall;

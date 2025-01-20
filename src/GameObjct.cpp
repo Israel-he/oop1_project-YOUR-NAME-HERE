@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(const sf::Vector2f& pos,const char type)
+GameObject::GameObject(const sf::Vector2f& pos, const char type)
     :m_position(pos)
 {
     m_Object.setTexture(getTexture(type));

@@ -5,7 +5,15 @@
 #include <SFML/Network.hpp>
 
 #include <memory>
+#include <iostream>
+#include <fstream>
+ 
 #include "Robot.h"
+#include "Wall.h"
+#include "Rock.h"
+#include "Door.h"
+#include "Guard.h"
+
 
 class GameControl
 {
@@ -25,20 +33,26 @@ public:
 	//Incharg on the events
 	void pollEvent();
 
+//////////////////////
 	//Update the game
 	void update();
-
 	//Render the game
 	void render();
-
+/////////////////////
+// 
 	//Read the file
 	void readFile();
+	void switchObject(const char symbol, sf::Vector2f locition);
+	sf::Vector2f getLoc(int row, int col);
 
 private:
 
 	sf::RenderWindow m_window;
 	sf::VideoMode m_videoMode;
 
+	//ReadFile
+	//std::ifstream inputFile;
+	std::ifstream inputFile;
 	sf::Event m_event;
 
 	sf::Vector2f m_position;
@@ -50,9 +64,6 @@ private:
 	//Moving objects
 	Robot* m_robot;
 	std::vector<std::unique_ptr<GameObject>> m_objects;
-	 
-	
-
 };
 
 
