@@ -39,7 +39,7 @@ public:
 	//Render the game
 	void render();
 /////////////////////
-// 
+
 	//Read the file
 	void readFile();
 	void switchObject(const char symbol, sf::Vector2f locition);

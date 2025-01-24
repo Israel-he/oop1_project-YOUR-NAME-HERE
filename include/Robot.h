@@ -29,20 +29,12 @@ public:
 	void resetClock();
 
 	 
-
 private:
-
-	//sf::Vector2f m_position;
 
 	sf::Clock m_time;
 	int m_point;
 	sf::Event m_event;
 	const float moveSpeed = 150.f;
-	//sf::Texture m_TxtRobot;
-	//sf::Sprite m_robot;
-
-   //The speed and time of the robot
-   
 };
 
  
