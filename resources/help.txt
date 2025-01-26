@@ -1,0 +1,11 @@
+Welcome to Bomberman!
+
+Objective:
+- Eliminate all enemies and score points.
+
+How to Play:
+1. Move your character using the arrow keys.
+2. Place a bomb with the spacebar.
+3. Stay away from explosions!
+
+Good luck!

@@ -12,7 +12,10 @@ public:
 	void move(float deltaTime);
 
 	virtual void draw(sf::RenderWindow& window) override;
+
+	float getDistaance();
 private:
 	int m_direction;
-	float m_moveSpeed = 50.f;
+	float m_moveSpeed = 100.f;
+	float m_countDistaance;//sum 50 pixsel anden delete
 };

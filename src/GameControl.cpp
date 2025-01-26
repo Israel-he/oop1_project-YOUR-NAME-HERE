@@ -44,27 +44,36 @@ void GameControl::readFile()
 	inputFile.close();
 }
 
+// Switch object based on symbol
 void GameControl::switchObject(const char symbol, sf::Vector2f locition)
 {
 	switch (symbol)
 	{
-	case '/':
-		m_robot = std::make_unique<Robot>(locition, '/');
+	case ID::ROBOT:
+		m_robot = std::make_unique<Robot>(locition, ID::ROBOT);
 		break;
-	case '!':
-		return m_guard.push_back(std::make_unique<Guard>(locition, symbol));
+	case ID::GUARD:
+		return m_guard.push_back(std::make_unique<Guard>(locition, ID::GUARD));
 		break;
-	case 'D':
-		return m_objects.push_back(std::make_unique<Door>(locition, symbol));
+	case ID::DOOR:
+		return m_objects.push_back(std::make_unique<Door>(locition, ID::DOOR));
 		break;
-	case '#':
-		m_objects.push_back(std::make_unique<Wall>(locition, symbol));
+	case ID::WALL:
+		m_objects.push_back(std::make_unique<Wall>(locition, ID::WALL));
 		break;
-	case '@':
-		return m_objects.push_back(std::make_unique<Rock>(locition, symbol));
+	case ID::ROCK:
+		return m_objects.push_back(std::make_unique<Rock>(locition, ID::ROCK));
+		break;
+	case ID::BOMB:
+		return m_objects.push_back(std::make_unique<Bomb>(locition, ID::BOMB));
+		break;
+	case ID::LIFE:
+		return m_objects.push_back(std::make_unique<Gift>(locition, ID::LIFE));
+		return m_objects.push_back(std::make_unique<Wall>(locition, ID::WALL));
 		break;
 	}
 }
+
 //====================================================
 sf::Vector2f GameControl::getLoc(int row, int col)//?need to do &?
 {
@@ -88,6 +97,12 @@ void GameControl::draw()
 	for (int i = 0; i < m_guard.size(); i++)
 	{
 		m_guard[i]->draw(m_window);
+	}
+
+	//gifts
+	for (int i = 0; i < m_gift.size(); i++)
+	{
+		m_gift[i]->draw(m_window);
 	}
 
 	//unMoveObjects
@@ -133,6 +148,9 @@ void GameControl::run()
 
 	for (int i = 0; i < m_MovingExplod.size(); i++)
 	{
+		if (m_MovingExplod[i]->getDistaance() >= 0.5)
+			m_MovingExplod.erase(m_MovingExplod.begin() +i);
+		else
 		m_MovingExplod[i]->move(m_deltaTime);
 	}
 }
@@ -141,7 +159,7 @@ void GameControl::creatMoveExplod(sf::Vector2f position)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		m_MovingExplod.push_back((std::make_unique<MovingExplod>(position, 'e', i)));
+		m_MovingExplod.push_back((std::make_unique<MovingExplod>(position, ID::BOMB_explode, i)));
 	}
 }
 //===================render==========================
@@ -165,7 +183,7 @@ void GameControl::pollEvent()
 
 		case sf::Event::KeyPressed:
 			if (m_event.key.code == sf::Keyboard::B)
-				m_bomb.push_back(std::make_unique<Bomb>(m_robot->getPosition(), 'b'));
+				m_bomb.push_back(std::make_unique<Bomb>(m_robot->getPosition(),ID::BOMB));
 			break;
 		}
 	}

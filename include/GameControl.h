@@ -1,3 +1,4 @@
+#pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -8,12 +9,14 @@
 #include <iostream>
 #include <fstream>
  
+#include "io.h"
 #include "Robot.h"
 #include "Wall.h"
 #include "Rock.h"
 #include "Door.h"
 #include "Guard.h"
 #include "Bomb.h"
+#include "Gift.h"
 #include "MovingExplod.h"
 
 class GameControl
@@ -72,24 +75,5 @@ private:
 	//unMoving objects
 	std::vector<std::unique_ptr<GameObject>> m_objects;
 	std::vector<std::unique_ptr<Bomb>> m_bomb;
+	std::vector<std::unique_ptr<Gift>> m_gift;
 };
-
-
-
-/*	WindowGame m_WindowGame;
- 
-	//size of window
-	sf::VideoMode m_videoMode;
-
-	sf::Event m_event;
-	sf::Texture m_robot;
-	//The guards of the game
-	//std::vector<Guard*> m_guard;To ues 
-
-	//The gifts of the game
-	//std::vector<Gift*> m_gift;To ues &gift1
-
-	//The static objects in the game
-	//std::vector<?> m_object
-
-	sf::Clock m_clock;*/
