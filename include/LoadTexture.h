@@ -18,5 +18,10 @@ private:
 	sf::Texture m_Wall;
 	sf::Texture m_rock;
 	sf::Texture m_door;
-
+	sf::Texture m_bomb;
+	sf::Texture m_explosion_up;
+	sf::Texture m_explosion_down;
+	sf::Texture m_explosion_right;
+	sf::Texture m_explosion_left;
+	sf::Texture m_explosion;
 };

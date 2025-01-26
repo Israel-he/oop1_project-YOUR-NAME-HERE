@@ -5,17 +5,21 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
  
-#include "GameObject.h"
+#include "MovingObject.h"
 
-class Robot :public GameObject
+class Robot :public  MovingObject
 {
 public:
     Robot(sf::Vector2f position,const char type);
 
 	virtual void draw(sf::RenderWindow& window) override;
 
-	void move(sf::Event& event, float m_deltaTime);
+	//virtual sf::Sprite& gatSprite() override;
+   // bool checkCollision(sf::Sprite& other);
 
+
+	void move(float m_deltaTime);
+    
 	//point==================
 	void setPoint(int point);
 	int getPoint();
@@ -25,15 +29,17 @@ public:
 	void setPosition(sf::Vector2f position);
 	sf::Vector2f getPosition();
 	//=========================
+	
+	//captuareLocition
+	void captuareLocition();//move the robot to the (% 50)
 
 	void resetClock();
 
-	 
+  
 private:
 
-	sf::Clock m_time;
+	int m_life;
 	int m_point;
-	sf::Event m_event;
 	const float moveSpeed = 150.f;
 };
 

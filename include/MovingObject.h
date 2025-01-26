@@ -1,18 +1,18 @@
+#pragma once
 #include <SFML/Graphics.hpp>
+#include "GameObject.h"
 
-class  MovingObject
+class MovingObject: public GameObject
 {   
 public:
-	MovingObject();
+	MovingObject(sf::Vector2f position, const char type);
 
-	virtual void move() = 0;
+	//virtual void move(float l) = 0;
 
-	void setPosition(sf::Vector2f position);
-	sf::Vector2f getPosition();
+	 sf::Vector2f getPosition();
 
 
-private:
-
-	sf::Clock m_clock;
-	sf::Vector2f m_position;
+protected:
+	sf::Vector2f m_direction;
 };
+ 

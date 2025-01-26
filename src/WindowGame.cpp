@@ -20,6 +20,6 @@ void WindowGame::drawWindowGame()
 
 void WindowGame::move()
 {
-    for(int i=0;i<20;i++)
-    m_robotSprite.move(0.f, 1.f);
+   /* for(int i=0;i<20;i++)
+    m_robotSprite.move(0.f, 1.f);*/
 }

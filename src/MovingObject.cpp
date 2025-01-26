@@ -1,10 +1,8 @@
 #include "MovingObject.h"
 
-MovingObject::MovingObject()
+MovingObject::MovingObject(sf::Vector2f position, const char type)
+    :GameObject(position, type)
 {
 }
 
-void MovingObject::setPosition(sf::Vector2f position)
-{
-
-}
+ 

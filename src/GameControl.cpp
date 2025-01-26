@@ -1,20 +1,15 @@
 #include "GameControl.h"
 #include <iostream>
 using namespace std;
+
 //c_tor
 GameControl::GameControl()
-	:m_position(0.f, 0.f), m_robot(nullptr),
-	inputFile("Board.txt"), m_videoMode(800, 800)
+	:inputFile("Board.txt"), m_videoMode(800, 800)
 {
 	iniwindow();
 	readFile();
-}
-
-//d_tor
-GameControl::~GameControl()
-{
-	delete m_robot;
-}
+	 
+} 
 
 //====================window====================
 void GameControl::iniwindow()
@@ -54,10 +49,10 @@ void GameControl::switchObject(const char symbol, sf::Vector2f locition)
 	switch (symbol)
 	{
 	case '/':
-		m_robot = new Robot(locition, '/');
+		m_robot = std::make_unique<Robot>(locition, '/');
 		break;
 	case '!':
-		return m_objects.push_back(std::make_unique<Guard>(locition, symbol));
+		return m_guard.push_back(std::make_unique<Guard>(locition, symbol));
 		break;
 	case 'D':
 		return m_objects.push_back(std::make_unique<Door>(locition, symbol));
@@ -80,28 +75,86 @@ sf::Vector2f GameControl::getLoc(int row, int col)//?need to do &?
 //==================update==========================
 void GameControl::update()
 {
+	run();
 	pollEvent();
 }
+//====================draw===========================
+void GameControl::draw()
+{
+	//robot
+	m_robot->draw(m_window);
 
+	 //guards
+	for (int i = 0; i < m_guard.size(); i++)
+	{
+		m_guard[i]->draw(m_window);
+	}
+
+	//unMoveObjects
+	for (int i = 0; i < m_objects.size(); i++)
+	{
+		m_objects[i]->draw(m_window);
+	}
+
+	//bombs
+	for (int i = 0; i < m_bomb.size(); i++)
+	{
+		m_bomb[i]->draw(m_window);
+	}
+
+	//moving bombs
+	for (int i = 0; i < m_MovingExplod.size(); i++)
+	{
+		m_MovingExplod[i]->draw(m_window);
+	}
+}
+
+//======================run===========================
+void GameControl::run()
+{
+	m_deltaTime = m_clock.restart().asSeconds();
+	m_robot->move(m_deltaTime);
+
+	for (int i = 0; i < m_guard.size(); i++)
+	{
+		m_guard[i]->move(m_robot->getPosition(), m_deltaTime);
+	}
+
+	for (int i = 0; i < m_bomb.size(); i++)
+	{
+		if (m_bomb[i]->getCountDown() < 0)
+		{
+			creatMoveExplod(m_bomb[i]->getPosition());
+			m_bomb.erase(m_bomb.begin() + i);
+		}
+		else
+			m_bomb[i]->countTime(m_deltaTime);
+	}
+
+	for (int i = 0; i < m_MovingExplod.size(); i++)
+	{
+		m_MovingExplod[i]->move(m_deltaTime);
+	}
+}
+//==============create moving expload==================
+void GameControl::creatMoveExplod(sf::Vector2f position)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		m_MovingExplod.push_back((std::make_unique<MovingExplod>(position, 'e', i)));
+	}
+}
 //===================render==========================
 void GameControl::render()
 {
 	m_window.clear(sf::Color::Black);
-	m_robot->draw(m_window);
-	 
-	for (int i = 0; i < m_objects.size();i++) 
-	{
-		m_objects[i]->draw(m_window);
-	}
-	 
+	draw();
 	m_window.display();
 }
 
-//===================pollEvevt=========================
+//===================pollEvevt========================
 void GameControl::pollEvent()
 {
-	m_deltaTime = m_clock.restart().asSeconds();
-
 	m_window.pollEvent(m_event);
 	{
 		switch (m_event.type)
@@ -111,12 +164,9 @@ void GameControl::pollEvent()
 			break;
 
 		case sf::Event::KeyPressed:
-			m_robot->move(m_event, m_deltaTime);
+			if (m_event.key.code == sf::Keyboard::B)
+				m_bomb.push_back(std::make_unique<Bomb>(m_robot->getPosition(), 'b'));
 			break;
-
 		}
-		
 	}
 }
-//===========================================
-

@@ -13,14 +13,14 @@ public:
 
 	GameObject(const sf::Vector2f& pos,const char type);
 
+	virtual void draw(sf::RenderWindow& window) = 0;
+
+	
 	//get and set positions=====================
 	void setPosition(const sf::Vector2f& newPos);
 	sf::Vector2f getPosition() const;
 	//==========================================
-
-	bool checkCollision(const GameObject& other) const;
-
-	virtual void draw(sf::RenderWindow& window) = 0;
+	//virtual sf::Sprite& gatSprite();
 
 protected:
 
