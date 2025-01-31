@@ -8,6 +8,12 @@ GameControl::GameControl()
 {
 	iniwindow();
 	readFile();
+
+	m_fontTimerp.loadFromFile("arial.ttf");
+	m_TextTimep.setCharacterSize(30);
+	m_TextTimep.setFont(m_fontTimerp);
+	m_TextTimep.setFillColor(sf::Color::Red);
+	m_TextTimep.setPosition(20.f,40.f);
 	 
 } 
 
@@ -44,7 +50,6 @@ void GameControl::readFile()
 	inputFile.close();
 }
 
-// Switch object based on symbol
 void GameControl::switchObject(const char symbol, sf::Vector2f locition)
 {
 	switch (symbol)
@@ -53,23 +58,23 @@ void GameControl::switchObject(const char symbol, sf::Vector2f locition)
 		m_robot = std::make_unique<Robot>(locition, ID::ROBOT);
 		break;
 	case ID::GUARD:
-		return m_guard.push_back(std::make_unique<Guard>(locition, ID::GUARD));
+		m_guard.push_back(std::make_unique<Guard>(locition, ID::GUARD));
 		break;
 	case ID::DOOR:
-		return m_objects.push_back(std::make_unique<Door>(locition, ID::DOOR));
+		m_objects.push_back(std::make_unique<Door>(locition, ID::DOOR));
 		break;
 	case ID::WALL:
 		m_objects.push_back(std::make_unique<Wall>(locition, ID::WALL));
 		break;
 	case ID::ROCK:
-		return m_objects.push_back(std::make_unique<Rock>(locition, ID::ROCK));
+		m_objects.push_back(std::make_unique<Rock>(locition, ID::ROCK));
 		break;
 	case ID::BOMB:
-		return m_objects.push_back(std::make_unique<Bomb>(locition, ID::BOMB));
+		m_objects.push_back(std::make_unique<Bomb>(locition, ID::BOMB));
 		break;
 	case ID::LIFE:
-		return m_objects.push_back(std::make_unique<Gift>(locition, ID::LIFE));
-		return m_objects.push_back(std::make_unique<Wall>(locition, ID::WALL));
+		m_objects.push_back(std::make_unique<Gift>(locition, ID::LIFE));
+		m_objects.push_back(std::make_unique<Wall>(locition, ID::WALL));
 		break;
 	}
 }
@@ -84,8 +89,22 @@ sf::Vector2f GameControl::getLoc(int row, int col)//?need to do &?
 //==================update==========================
 void GameControl::update()
 {
-	run();
+	
 	pollEvent();
+	run();
+}
+//=======================srtTimer=============================
+void GameControl::setTimer(float time)
+{
+	m_countTime += m_deltaTime;
+	if (m_countTime >= 1 )
+	{
+		count++;
+		m_TextTimep.setString(std::to_string(count));
+		m_countTime = 0;
+	}
+		
+
 }
 //====================draw===========================
 void GameControl::draw()
@@ -97,12 +116,6 @@ void GameControl::draw()
 	for (int i = 0; i < m_guard.size(); i++)
 	{
 		m_guard[i]->draw(m_window);
-	}
-
-	//gifts
-	for (int i = 0; i < m_gift.size(); i++)
-	{
-		m_gift[i]->draw(m_window);
 	}
 
 	//unMoveObjects
@@ -122,17 +135,27 @@ void GameControl::draw()
 	{
 		m_MovingExplod[i]->draw(m_window);
 	}
+	m_window.draw(m_TextTimep);
 }
-
+//====================checkCollision========================
+void GameControl::checkCollision(GameObject& gameObject)
+{
+	for (auto& unmovable : m_objects)
+	{
+		gameObject.handleCollision(*unmovable);
+	}
+}
 //======================run===========================
 void GameControl::run()
 {
 	m_deltaTime = m_clock.restart().asSeconds();
-	m_robot->move(m_deltaTime);
-
+	setTimer(m_deltaTime);
+	m_robot->move(m_position,m_deltaTime);// m_position no reaason
+	checkCollision(*m_robot);
 	for (int i = 0; i < m_guard.size(); i++)
 	{
 		m_guard[i]->move(m_robot->getPosition(), m_deltaTime);
+		checkCollision(*m_guard[i]);
 	}
 
 	for (int i = 0; i < m_bomb.size(); i++)
@@ -148,11 +171,19 @@ void GameControl::run()
 
 	for (int i = 0; i < m_MovingExplod.size(); i++)
 	{
-		if (m_MovingExplod[i]->getDistaance() >= 0.5)
+		if (m_MovingExplod[i]->getDistance() >= 0.45)
 			m_MovingExplod.erase(m_MovingExplod.begin() +i);
 		else
-		m_MovingExplod[i]->move(m_deltaTime);
+		{
+			m_MovingExplod[i]->move(m_position, m_deltaTime);//m_position no reaason
+			checkCollision(*m_MovingExplod[i]);
+		}
 	}
+		std::erase_if(m_objects, [](auto& object)
+			{
+				return object->getIsdispose();
+			});
+		
 }
 //==============create moving expload==================
 void GameControl::creatMoveExplod(sf::Vector2f position)
@@ -162,6 +193,7 @@ void GameControl::creatMoveExplod(sf::Vector2f position)
 		m_MovingExplod.push_back((std::make_unique<MovingExplod>(position, ID::BOMB_explode, i)));
 	}
 }
+
 //===================render==========================
 void GameControl::render()
 {
@@ -169,6 +201,7 @@ void GameControl::render()
 	draw();
 	m_window.display();
 }
+
 
 //===================pollEvevt========================
 void GameControl::pollEvent()

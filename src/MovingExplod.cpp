@@ -1,13 +1,13 @@
 #include "MovingExplod.h"
 
 MovingExplod::MovingExplod(sf::Vector2f position, const char type,int direction)
-    :MovingObject(position, type),m_direction(direction), m_countDistaance(0)
+    :MovingObject(roundLoction(position), type),m_direction(direction), m_countDistance(0)
 {
 }
 
-void MovingExplod::move(float deltaTime)
+void MovingExplod::move(sf::Vector2f position,float deltaTime)
 {
-	m_countDistaance += deltaTime;
+	m_countDistance += deltaTime;
 
 	switch (m_direction)
 	{
@@ -29,12 +29,34 @@ void MovingExplod::move(float deltaTime)
 	}
 }
 
+
+
 void MovingExplod::draw(sf::RenderWindow& window)
 {
     window.draw(m_Object);
 }
 
-float MovingExplod::getDistaance()
+float MovingExplod::getDistance()  
 {
-	return m_countDistaance;
+	return m_countDistance;
+}
+//============================
+sf::Vector2f MovingExplod::roundLoction(sf::Vector2f position)
+{
+
+	// עיגול המיקום למספר הקרוב ביותר שמתחלק ב-50
+	position.x = std::round(position.x / 50.0f) * 50.0f;
+	position.y = std::round(position.y / 50.0f) * 50.0f;
+
+	return position;
+}
+//============================
+//colision
+void MovingExplod::handleCollision(GameObject& gameObject)
+{
+	gameObject.handleCollision(*this);
+}
+//=========================================
+void MovingExplod::handleCollision(Wall& gameObject)
+{
 }

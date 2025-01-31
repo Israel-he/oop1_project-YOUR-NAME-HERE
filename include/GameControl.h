@@ -45,15 +45,17 @@ public:
 	void update();
 	//Render the game
 	void render();
-
+	void checkCollision(GameObject& gameObject);
 	void run();
 
 	//draw
 	void draw();
 	
 	void creatMoveExplod(sf::Vector2f position);
-private:
 
+	void setTimer(float time);
+private:
+	sf::Vector2f m_position;//move robot
 	sf::RenderWindow m_window;
 	sf::VideoMode m_videoMode;
 
@@ -66,14 +68,18 @@ private:
 	sf::Clock m_clock;
 	float m_deltaTime;
 
+	float m_countTime = 0;
+	int count = 0;
+	sf::Font m_fontTimerp;
+	sf::Text m_TextTimep;
+
 	//Moving objects
-	 
-	std::unique_ptr<Robot> m_robot;
-	std::vector<std::unique_ptr<Guard>> m_guard;
-	std::vector<std::unique_ptr<MovingExplod>> m_MovingExplod;
+	std::unique_ptr<MovingObject> m_robot;
+	std::vector<std::unique_ptr<MovingObject>> m_guard;
+	std::vector<std::unique_ptr<MovingObject>> m_MovingExplod;//std::vector<std::unique_ptr<Bomb>> m_bomb;
 
 	//unMoving objects
-	std::vector<std::unique_ptr<GameObject>> m_objects;
+	std::vector<std::unique_ptr<GameObject>> m_objects;//std::vector<std::unique_ptr<Gift>> m_gift;
 	std::vector<std::unique_ptr<Bomb>> m_bomb;
-	std::vector<std::unique_ptr<Gift>> m_gift;
+	//std::vector<std::unique_ptr<Gift>> m_gift;
 };

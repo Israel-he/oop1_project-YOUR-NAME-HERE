@@ -1,14 +1,30 @@
 #include "GameObject.h"
 
 GameObject::GameObject(const sf::Vector2f& pos, const char type)
-    :m_position(pos)
+    :m_position(pos)//,m_loadTexture(*(new LoadTexture))
 {
-    m_Object.setTexture(getTexture(type));
+    m_Object.setTexture(m_loadTexture.getTexture(type));
     m_Object.setPosition(m_position);
 }
 
 //====================================
  
+
+bool GameObject::checkCollision(const GameObject& other) const
+{
+    if (&other == this) return false;
+
+    // Always return true just for demonstrating the collision handling
+    // The commented-out line is probably what you want in the actual game
+    return true;
+    // return m_rectangle.getGlobalBounds().intersects(other.getGlobalBounds());
+}
+//===================getSprite===================
+sf::Sprite& GameObject::getSprit()  
+{
+    return m_Object;
+}
+
 //==================position===========================
 void GameObject::setPosition(const sf::Vector2f& newPos)
 {
@@ -21,3 +37,7 @@ sf::Vector2f GameObject::getPosition() const
 }
 
 //===================================================
+bool GameObject::getIsdispose()
+{
+    return m_isDispose;
+}
