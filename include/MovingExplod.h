@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "MovingObject.h"
-
+#include "Guard.h"
 
 class MovingExplod :public MovingObject
 {
@@ -20,8 +20,8 @@ public:
 	//check collisions
 	bool checkCollision(float deltaTime);
 	virtual void handleCollision(GameObject& gameObject) ;
-	virtual void handleCollision(Robot& gameObject) {};
-	virtual void handleCollision(Guard& gameObject) {};
+	virtual void handleCollision(Robot& gameObject);
+	virtual void handleCollision(Guard& gameObject);
 	virtual void handleCollision(Gift& gameObject) {};
 	virtual void handleCollision(Wall& gameObject);
 	virtual void handleCollision(Rock& gameObject) {};

@@ -51,12 +51,28 @@ sf::Vector2f MovingExplod::roundLoction(sf::Vector2f position)
 	return position;
 }
 //============================
-//colision
+//collision
 void MovingExplod::handleCollision(GameObject& gameObject)
 {
 	gameObject.handleCollision(*this);
 }
-//=========================================
+
+//Robot
+void MovingExplod::handleCollision(Robot& gameObject)
+{
+	if (m_Object.getGlobalBounds().intersects(gameObject.getSprit().getGlobalBounds()))
+		gameObject.handleCollision(*this);
+}
+
+//Guard
+void MovingExplod::handleCollision(Guard& gameObject)
+{
+	if (m_Object.getGlobalBounds().intersects(gameObject.getSprit().getGlobalBounds()))
+		gameObject.handleCollision(*this);
+}
+
+//Wall
 void MovingExplod::handleCollision(Wall& gameObject)
 {
 }
+//=========================================

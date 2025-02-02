@@ -1,5 +1,7 @@
 #include "GameObject.h"
-
+#include "Robot.h"
+#include "Guard.h"
+#include "MovingExplod.h"
 class Rock :public GameObject
 {
 public:
@@ -12,8 +14,8 @@ public:
 	//check collisions
 	bool checkCollision(float deltaTime);
 	virtual void handleCollision(GameObject& gameObject) {};
-	virtual void handleCollision(Robot& gameObject) {};
-	virtual void handleCollision(Guard& gameObject) {};
+	virtual void handleCollision(Robot& gameObject);
+	virtual void handleCollision(Guard& gameObject);
 	virtual void handleCollision(Gift& gameObject) {};
 	virtual void handleCollision(Wall& gameObject) {};//
 	virtual void handleCollision(Rock& gameObject) {};

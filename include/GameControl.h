@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
  
+#include "Timer.h"
 #include "io.h"
 #include "Robot.h"
 #include "Wall.h"
@@ -18,7 +19,7 @@
 #include "Bomb.h"
 #include "Gift.h"
 #include "MovingExplod.h"
-
+static bool m_deleteBomb = false;
 class GameControl
 {
 public:
@@ -53,7 +54,7 @@ public:
 	
 	void creatMoveExplod(sf::Vector2f position);
 
-	void setTimer(float time);
+	
 private:
 	sf::Vector2f m_position;//move robot
 	sf::RenderWindow m_window;
@@ -64,14 +65,12 @@ private:
 
 	sf::Event m_event;
 
+	Timer m_timer;
 	//clock
 	sf::Clock m_clock;
 	float m_deltaTime;
 
-	float m_countTime = 0;
-	int count = 0;
-	sf::Font m_fontTimerp;
-	sf::Text m_TextTimep;
+	
 
 	//Moving objects
 	std::unique_ptr<MovingObject> m_robot;

@@ -18,7 +18,7 @@ public:
 	void move(sf::Vector2f position, float deltaTime) override;
 
 
-	//captuareLocition
+	//captureLocition
 	void captuareLocition();//move the robot to the (% 50)
 
 
@@ -38,11 +38,11 @@ public:
 	virtual void handleCollision(GameObject& gameObject);
 	virtual void handleCollision(Robot& gameObject) {};
 	virtual void handleCollision(Guard& gameObject) {};
-	virtual void handleCollision(Gift& gameObject) {};
-	virtual void handleCollision(Wall& gameObject) ;//
-	virtual void handleCollision(Rock& gameObject) ;
+	virtual void handleCollision(Gift& gameObject);
+	virtual void handleCollision(Wall& gameObject);
+	virtual void handleCollision(Rock& gameObject);
 	virtual void handleCollision(Bomb& gameObject) {};
-	virtual void handleCollision(MovingExplod& gameObject) {};
+	virtual void handleCollision(MovingExplod& gameObject);
 	virtual void handleCollision(Door& gameObject) {};
 
 private:
@@ -50,6 +50,8 @@ private:
 	int m_life;
 	int m_point;
 	const float moveSpeed = 150.f;
+
+	sf::Vector2f m_firstPosition;
 
 	sf::Font m_fontLifeNum;
 	sf::Text m_textLifeNum;

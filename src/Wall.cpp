@@ -15,7 +15,7 @@ bool Wall::getIsdispose()
 {
 	return m_isDispose;
 }
-//==========================================
+//====================Robot======================
 void Wall::handleCollision(Robot& gameObject)
 {
    if(m_Object.getGlobalBounds().intersects(gameObject.getSprit().getGlobalBounds()))
@@ -23,7 +23,9 @@ void Wall::handleCollision(Robot& gameObject)
 
    return;
 }
-//=========================================
+//=============================================
+
+//===================Guard======================
 void Wall::handleCollision(Guard& gameObject)
 {
 	if (m_Object.getGlobalBounds().intersects(gameObject.getSprit().getGlobalBounds()))
@@ -31,7 +33,7 @@ void Wall::handleCollision(Guard& gameObject)
 
 	return;
 }
-//===============================================
+//=========================MovingExplod======================
 void Wall::handleCollision(MovingExplod& gameObject)
 {
 	if (m_Object.getGlobalBounds().intersects(gameObject.getSprit().getGlobalBounds()))

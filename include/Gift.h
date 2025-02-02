@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Robot.h"
 
 class Gift :public GameObject
 {
@@ -14,7 +15,7 @@ public:
 	//check collisions
 	bool checkCollision(float deltaTime);
 	virtual void handleCollision(GameObject& gameObject) {};
-	virtual void handleCollision(Robot& gameObject) {};
+	virtual void handleCollision(Robot& gameObject);
 	virtual void handleCollision(Guard& gameObject) {};
 	virtual void handleCollision(Gift& gameObject) {};
 	virtual void handleCollision(Wall& gameObject) {};//

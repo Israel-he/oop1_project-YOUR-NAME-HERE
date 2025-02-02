@@ -24,6 +24,7 @@ Guard::Guard(sf::Vector2f position, const char type)
     randomOffset.y = static_cast<float>(rand() % 101 - 50) / 50.0f * randomnessFactor;
     uniqueOffset.x = static_cast<float>(rand() % 201 - 100);
     uniqueOffset.y = static_cast<float>(rand() % 201 - 100);
+    roundLoction();
 }
 
 void Guard::draw(sf::RenderWindow& window)
@@ -52,7 +53,7 @@ void Guard::move(sf::Vector2f Robot_loc, float deltatime)
     }
     else
     {
-        //captuareLocition();
+        captuareLocition();
         roundLoction();
         randomMove(deltatime);
         m_canMove = false;
@@ -122,7 +123,11 @@ bool Guard::isFrozen() const {
 int Guard::getFreezeDuration() const {
     return freezeDuration;
 }
-
+//=======================
+bool Guard::getIsdispose()
+{
+    return m_isDispose;
+}
 
 //colisitions
 //=================================================
@@ -137,6 +142,19 @@ void Guard::handleCollision(Wall& gameObject)
 {
     std::cout << "in  \n";
     m_canMove = true;
+} 
+
+//Rock
+void Guard::handleCollision(Rock& gameObject)
+{
+    std::cout << "u  \n";
+    m_canMove = true;
+}
+
+//MovingExplod
+void Guard::handleCollision(MovingExplod& gameObject)
+{
+    m_isDispose = true;
 }
 
 

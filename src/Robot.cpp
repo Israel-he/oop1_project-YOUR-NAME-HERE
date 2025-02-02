@@ -2,7 +2,7 @@
 #include <iostream>
 
 Robot::Robot(sf::Vector2f position,const char type)
-	:MovingObject(position,type),m_point(0),m_life(5)
+	:MovingObject(position,type),m_point(0),m_life(5), m_firstPosition(position)
 {
     m_fontLifeNum.loadFromFile("arial.ttf");
     m_textLifeNum.setCharacterSize(30);
@@ -63,15 +63,55 @@ void Robot::handleCollision(GameObject& gameObject)
     // double dispatch
     gameObject.handleCollision(*this);
 }
+//Gift
+void Robot::handleCollision(Gift& gameObject)
+{
+    m_life++;
+    m_textLifeNum.setString(std::to_string(m_life));
+}
 //==============================================
  void Robot::handleCollision(Wall& gameObject)
  {
-     std::cout << "in collotion1 \n";
+     std::cout << "in collationWall \n";
      m_canMove = true;
  }
 
+ //Rock
  void Robot::handleCollision(Rock& gameObject)
  {
+     std::cout << "in collationRock \n";
+     m_canMove = true;
+ }
+
+ //MovingExplod
+ void Robot::handleCollision(MovingExplod& gameObject)//need to check if si dead
+ {
+     m_life--;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     m_position = m_firstPosition;
+     m_Object.setPosition(m_firstPosition);
+     m_textLifeNum.setString(std::to_string(m_life));
  }
 
 //=====================move======================================

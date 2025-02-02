@@ -16,7 +16,10 @@
 #include <SFML/Network.hpp>
 
 #include "MovingObject.h"
-
+#include "GameObject.h"
+#include "Robot.h"
+#include "Guard.h"
+#include "MovingExplod.h"
 
 class Guard :public MovingObject
 {
@@ -45,17 +48,18 @@ public:
     void randomMove(float deltaTime);
     void captuareLocition();//from robot
     void roundLoction();//from robot
-    
+    bool getIsdispose();
+
     //check collisions
     bool checkCollision(float deltaTime);
     virtual void handleCollision(GameObject& gameObject);
     virtual void handleCollision(Robot& gameObject) {};
     virtual void handleCollision(Guard& gameObject) {};
     virtual void handleCollision(Gift& gameObject) {};
-    virtual void handleCollision(Wall& gameObject) ;//
-    virtual void handleCollision(Rock& gameObject) {};
+    virtual void handleCollision(Wall& gameObject) ;
+    virtual void handleCollision(Rock& gameObject);
     virtual void handleCollision(Bomb& gameObject) {};
-    virtual void handleCollision(MovingExplod& gameObject) {};
+    virtual void handleCollision(MovingExplod& gameObject);
     virtual void handleCollision(Door& gameObject) {};
 
 private:
