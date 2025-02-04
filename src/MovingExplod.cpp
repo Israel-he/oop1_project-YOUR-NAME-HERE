@@ -1,4 +1,6 @@
 #include "MovingExplod.h"
+#include <GameControl.h>
+
 
 MovingExplod::MovingExplod(sf::Vector2f position, const char type,int direction)
     :MovingObject(roundLoction(position), type),m_direction(direction), m_countDistance(0)
@@ -50,6 +52,10 @@ sf::Vector2f MovingExplod::roundLoction(sf::Vector2f position)
 
 	return position;
 }
+void MovingExplod::ResetLocition()
+{
+	m_isDispose = true;
+}
 //============================
 //collision
 void MovingExplod::handleCollision(GameObject& gameObject)
@@ -61,7 +67,11 @@ void MovingExplod::handleCollision(GameObject& gameObject)
 void MovingExplod::handleCollision(Robot& gameObject)
 {
 	if (m_Object.getGlobalBounds().intersects(gameObject.getSprit().getGlobalBounds()))
+	{
+		GameControl::m_restartGame = true;
 		gameObject.handleCollision(*this);
+		 
+	}
 }
 
 //Guard

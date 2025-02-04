@@ -15,3 +15,9 @@ void Door::draw(sf::RenderWindow& window)
 {
 	window.draw(m_Object);
 }
+
+void Door::handleCollision(Robot& gameObject)
+{
+	if (m_Object.getGlobalBounds().intersects(gameObject.getSprit().getGlobalBounds()))
+		gameObject.handleCollision(*this);
+}

@@ -33,3 +33,13 @@ int Bomb::getCountDown()const
 {
 	return m_countDown;
 }
+
+bool Bomb::getIsdispose()
+{
+	return m_isDispose;
+}
+
+void Bomb::resetLocation()
+{
+	m_isDispose = true;
+}

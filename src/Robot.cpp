@@ -1,5 +1,8 @@
 #include "Robot.h"
 #include <iostream>
+#include <MainMenu.h>
+
+ 
 
 Robot::Robot(sf::Vector2f position,const char type)
 	:MovingObject(position,type),m_point(0),m_life(5), m_firstPosition(position)
@@ -11,12 +14,20 @@ Robot::Robot(sf::Vector2f position,const char type)
     m_textLifeNum.setString(std::to_string(m_life));
     m_textLifeNum.setPosition(80.f, 10.f);
 
-    m_fontLife.loadFromFile("arial.ttf");
-    m_textLife.setCharacterSize(30);
-    m_textLife.setFont(m_fontLife);
-    m_textLife.setFillColor(sf::Color::Red);
-    m_textLife.setString("Life: ");
-    m_textLife.setPosition(20.f, 10.f);
+    m_fontLifePoint.loadFromFile("arial.ttf");
+    m_textLifePoint.setCharacterSize(30);
+    m_textLifePoint.setFont(m_fontLifePoint);
+    m_textLifePoint.setFillColor(sf::Color::Red);
+    m_textLifePoint.setString("Life:     Point:");
+    m_textLifePoint.setPosition(20.f, 10.f);
+
+    m_fontPoint.loadFromFile("arial.ttf");
+    m_textPoint.setCharacterSize(30);
+    m_textPoint.setFont(m_fontPoint);
+    m_textPoint.setFillColor(sf::Color::Red);
+    m_textPoint.setString(std::to_string(m_point));
+    m_textPoint.setPosition(200.f, 10.f);
+
 
 }
 
@@ -25,13 +36,15 @@ void Robot::draw(sf::RenderWindow& window)
 {
     window.draw(m_Object);
     window.draw(m_textLifeNum);
-    window.draw(m_textLife);
+    window.draw(m_textLifePoint);
+    window.draw(m_textPoint);
 }
 
 //==================The point=========================
 void Robot::setPoint(int point)
 {
 	m_point += point;
+    m_textPoint.setString(std::to_string(m_point));
 }
 
 int Robot::getPoint()
@@ -57,62 +70,7 @@ sf::Vector2f Robot::getPosition()
 //    return false;
 //}
 
- //=============================================
-void Robot::handleCollision(GameObject& gameObject)  
-{
-    // double dispatch
-    gameObject.handleCollision(*this);
-}
-//Gift
-void Robot::handleCollision(Gift& gameObject)
-{
-    m_life++;
-    m_textLifeNum.setString(std::to_string(m_life));
-}
-//==============================================
- void Robot::handleCollision(Wall& gameObject)
- {
-     std::cout << "in collationWall \n";
-     m_canMove = true;
- }
 
- //Rock
- void Robot::handleCollision(Rock& gameObject)
- {
-     std::cout << "in collationRock \n";
-     m_canMove = true;
- }
-
- //MovingExplod
- void Robot::handleCollision(MovingExplod& gameObject)//need to check if si dead
- {
-     m_life--;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     m_position = m_firstPosition;
-     m_Object.setPosition(m_firstPosition);
-     m_textLifeNum.setString(std::to_string(m_life));
- }
 
 //=====================move======================================
 void Robot::move(sf::Vector2f position,float deltaTime)
@@ -143,17 +101,10 @@ void Robot::move(sf::Vector2f position,float deltaTime)
     }
     else
     {
+         
         roundLoction();
         m_canMove = false;
-       /* int x = (m_position.x + 15) / 50;
-        int y = (m_position.y + 15) / 50;
-
-        x *= 50;
-        y *= 50;
-        m_position = sf::Vector2f((float)x, (float)y);
-        m_Object.setPosition(m_position);*/
     }
-   
 }
 
 
@@ -185,6 +136,13 @@ void Robot::roundLoction()//i need to check why i need them both*
     // עדכון המיקום של האובייקט
     m_Object.setPosition(m_position);
 }
+
+//=====================================
+void Robot::setLife(int life)
+{
+    m_life += life;
+    m_textLifeNum.setString(std::to_string(m_life));
+}
 //===================checkCollision=======================
 //bool Robot::checkCollision(sf::Sprite& other)
 //{
@@ -192,7 +150,69 @@ void Robot::roundLoction()//i need to check why i need them both*
 //           other.getGlobalBounds());
 //}
 
+ //=============================================
+void Robot::handleCollision(GameObject& gameObject)
+{
+    // double dispatch
+    gameObject.handleCollision(*this);
+}
+
+//Guard
+void Robot::handleCollision(Guard& gameObject)
+{
+    m_life--;
+    m_position = m_firstPosition;
+    m_Object.setPosition(m_firstPosition);
+    m_textLifeNum.setString(std::to_string(m_life));
+    std::cout << "kkkk \n";
+    GameControl::m_restartGame = true;
+}
+
+//Gift
+void Robot::handleCollision(Gift& gameObject)
+{
+    m_life++;
+    m_textLifeNum.setString(std::to_string(m_life));
+}
+//==============================================
+void Robot::handleCollision(Wall& gameObject)
+{
+    std::cout << "in collationWall \n";
+    m_canMove = true;
+}
+
+//Rock
+void Robot::handleCollision(Rock& gameObject)
+{
+    std::cout << "in collationRock \n";
+    m_canMove = true;
+}
+
+//MovingExplod
+void Robot::handleCollision(MovingExplod& gameObject)//need to check if si dead
+{
+    m_life--;
+    m_position = m_firstPosition;
+    m_Object.setPosition(m_firstPosition);
+    m_textLifeNum.setString(std::to_string(m_life));
+
+    GameControl::m_restartGame = true;
+}
+
+void Robot::handleCollision(Door& gameObject)
+{
+    m_point += 25;
+    m_textPoint.setString(std::to_string(m_point));
+}
+
+//=================================================
+
 sf::Sprite& Robot::getSprit()
 {
     return m_Object;
+}
+
+void Robot::ResetLocition()
+{
+
 }

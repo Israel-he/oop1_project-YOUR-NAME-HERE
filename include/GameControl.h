@@ -19,14 +19,17 @@
 #include "Bomb.h"
 #include "Gift.h"
 #include "MovingExplod.h"
-static bool m_deleteBomb = false;
+#include <MainMenu.h>
+
+ 
+
 class GameControl
 {
 public:
 
 	//C-tor & D-tor
 	GameControl();
-	 
+	static bool m_restartGame;
 	//============================
 	//functions for the Window
 	//Check if the window is open
@@ -51,10 +54,16 @@ public:
 
 	//draw
 	void draw();
-	
+
 	void creatMoveExplod(sf::Vector2f position);
 
-	
+	void checkIfReset();
+
+	/*void Random_Gift();
+	void updateFreezeStatus(float deltaTime);
+	void froze_Guards(int timeFrozen);
+	void remove_guard();
+	void endGame();*/
 private:
 	sf::Vector2f m_position;//move robot
 	sf::RenderWindow m_window;
@@ -70,7 +79,7 @@ private:
 	sf::Clock m_clock;
 	float m_deltaTime;
 
-	
+
 
 	//Moving objects
 	std::unique_ptr<MovingObject> m_robot;
@@ -80,5 +89,6 @@ private:
 	//unMoving objects
 	std::vector<std::unique_ptr<GameObject>> m_objects;//std::vector<std::unique_ptr<Gift>> m_gift;
 	std::vector<std::unique_ptr<Bomb>> m_bomb;
-	//std::vector<std::unique_ptr<Gift>> m_gift;
+
+
 };

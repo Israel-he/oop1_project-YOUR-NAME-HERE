@@ -8,6 +8,8 @@ public:
 	virtual void draw(sf::RenderWindow& window) override;
 	void countTime(float deltaTime);
 	int getCountDown() const;
+	bool getIsdispose();
+	void resetLocation();
 
 	//check collisions
 	bool checkCollision(float deltaTime);
@@ -23,7 +25,7 @@ public:
 private:
 
 	double m_countSec;
-	int m_countDown = 5;
+	int m_countDown = 3;
 
 	sf::Font m_fontTimer;
 	sf::Text m_textTime;

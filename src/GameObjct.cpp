@@ -10,6 +10,10 @@ GameObject::GameObject(const sf::Vector2f& pos, const char type)
 //====================================
  
 
+sf::Sprite& GameObject::getSprit() const {
+    return const_cast<sf::Sprite&>(m_Object); // Return the sprite
+}
+
 bool GameObject::checkCollision(const GameObject& other) const
 {
     if (&other == this) return false;

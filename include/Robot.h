@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "MovingObject.h"
 #include "Wall.h"
-
+//#include "GameControl.h"
 class Robot :public MovingObject
 {
 public:
@@ -21,7 +21,7 @@ public:
 	//captureLocition
 	void captuareLocition();//move the robot to the (% 50)
 
-
+	virtual void ResetLocition() override;
 	//point==================
 	void setPoint(int point);
 	int getPoint();
@@ -33,17 +33,18 @@ public:
 	//=========================
 	void roundLoction();
 
+	void setLife(int life);
 	//check collisions
 	//bool checkCollision(float deltaTime);
 	virtual void handleCollision(GameObject& gameObject);
 	virtual void handleCollision(Robot& gameObject) {};
-	virtual void handleCollision(Guard& gameObject) {};
+	virtual void handleCollision(Guard& gameObject);
 	virtual void handleCollision(Gift& gameObject);
 	virtual void handleCollision(Wall& gameObject);
 	virtual void handleCollision(Rock& gameObject);
 	virtual void handleCollision(Bomb& gameObject) {};
 	virtual void handleCollision(MovingExplod& gameObject);
-	virtual void handleCollision(Door& gameObject) {};
+	virtual void handleCollision(Door& gameObject);
 
 private:
 	bool m_canMove = false;
@@ -51,13 +52,17 @@ private:
 	int m_point;
 	const float moveSpeed = 150.f;
 
+
 	sf::Vector2f m_firstPosition;
 
 	sf::Font m_fontLifeNum;
 	sf::Text m_textLifeNum;
 
-	sf::Font m_fontLife;
-	sf::Text m_textLife;
+	sf::Font m_fontLifePoint;
+	sf::Text m_textLifePoint;
+
+	sf::Font m_fontPoint;
+	sf::Text m_textPoint;
 };
 
 

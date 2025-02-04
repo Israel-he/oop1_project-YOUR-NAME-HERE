@@ -1,13 +1,6 @@
 
 
 
-
-
-
-
-
-
-
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -20,7 +13,6 @@
 #include "Robot.h"
 #include "Guard.h"
 #include "MovingExplod.h"
-
 class Guard :public MovingObject
 {
   
@@ -42,8 +34,11 @@ public:
     void freeze(int duration);                     // הקפאת השומר למשך זמן
     void updateFreezeStatus();                     // עדכון סטטוס הקפאה
     virtual void draw(sf::RenderWindow& window) override; // ציור השומר בחלון
-    
-
+    virtual void ResetLocition() override;
+  
+    bool isColliding(const sf::Vector2f& newPos, const GameObject& other) const;
+    void moveTowards(sf::Vector2f target, float deltaTime, std::vector<std::unique_ptr<GameObject>>& objects);
+     
     void move(sf::Vector2f Robot_loc, float deltatime) override; // תנועה לכיוון הרובוט
     void randomMove(float deltaTime);
     void captuareLocition();//from robot
@@ -51,9 +46,9 @@ public:
     bool getIsdispose();
 
     //check collisions
-    bool checkCollision(float deltaTime);
+    //bool checkCollision(float deltaTime);
     virtual void handleCollision(GameObject& gameObject);
-    virtual void handleCollision(Robot& gameObject) {};
+    virtual void handleCollision(Robot& gameObject);
     virtual void handleCollision(Guard& gameObject) {};
     virtual void handleCollision(Gift& gameObject) {};
     virtual void handleCollision(Wall& gameObject) ;
@@ -63,7 +58,7 @@ public:
     virtual void handleCollision(Door& gameObject) {};
 
 private:
-
+    sf::Vector2f m_firstPosition;
     sf::Vector2f uniqueOffset;  // נקודת יעד ייחודית לכל שומר
     sf::Vector2f randomOffset; // פקטור רנדומלי ייחודי לשומר
     float moveSpeed = 50.f;

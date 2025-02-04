@@ -16,9 +16,10 @@ public:
     float getDistance();
 	void move(sf::Vector2f position, float deltaTime);
 	sf::Vector2f roundLoction(sf::Vector2f position);
+	virtual void ResetLocition() override;
 
 	//check collisions
-	bool checkCollision(float deltaTime);
+	//bool checkCollision(float deltaTime);
 	virtual void handleCollision(GameObject& gameObject) ;
 	virtual void handleCollision(Robot& gameObject);
 	virtual void handleCollision(Guard& gameObject);

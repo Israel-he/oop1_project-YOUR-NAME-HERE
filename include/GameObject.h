@@ -22,7 +22,9 @@ public:
 	GameObject(const sf::Vector2f& pos,const char type);
 	virtual ~GameObject() {};
 	virtual void draw(sf::RenderWindow& window) = 0;
-	sf::Sprite& getSprit();
+	 
+    sf::Sprite& getSprit();
+    sf::Sprite& getSprit() const;
 	//get and set positions=====================
 	void setPosition(const sf::Vector2f& newPos);
     sf::Vector2f getPosition() const;
