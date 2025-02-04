@@ -1,3 +1,4 @@
+#pragma once
 #include "GameObject.h"
 #include "Robot.h"
 
@@ -7,8 +8,8 @@ public:
 
 	Gift(sf::Vector2f position, const char type);
 
-	virtual sf::Sprite& gatSprite();
-
+	//virtual sf::Sprite& getSprit() override;
+	 sf::Sprite& getSprit() override;
 
 	virtual void draw(sf::RenderWindow& window) override;
 

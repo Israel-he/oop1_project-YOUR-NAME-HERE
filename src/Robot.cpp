@@ -1,7 +1,7 @@
 #include "Robot.h"
 #include <iostream>
 #include <MainMenu.h>
-
+GameControl b;
  
 
 Robot::Robot(sf::Vector2f position,const char type)
@@ -17,8 +17,8 @@ Robot::Robot(sf::Vector2f position,const char type)
     m_fontLifePoint.loadFromFile("arial.ttf");
     m_textLifePoint.setCharacterSize(30);
     m_textLifePoint.setFont(m_fontLifePoint);
-    m_textLifePoint.setFillColor(sf::Color::Red);
-    m_textLifePoint.setString("Life:     Point:");
+    m_textLifePoint.setFillColor(sf::Color::White);
+    m_textLifePoint.setString("Life:     Point:       Game time one minute:");
     m_textLifePoint.setPosition(20.f, 10.f);
 
     m_fontPoint.loadFromFile("arial.ttf");
@@ -107,6 +107,12 @@ void Robot::move(sf::Vector2f position,float deltaTime)
     }
 }
 
+void Robot::setFirstLoc()
+{
+    m_position = m_firstPosition;
+    m_Object.setPosition(m_firstPosition);
+}
+
 
 //=========================captuareLocition==============*
 void Robot::captuareLocition()//מחשב את השארית ומאפס אותה לפי הצורך
@@ -160,18 +166,17 @@ void Robot::handleCollision(GameObject& gameObject)
 //Guard
 void Robot::handleCollision(Guard& gameObject)
 {
-    m_life--;
-    m_position = m_firstPosition;
+    m_life-=1;
     m_Object.setPosition(m_firstPosition);
     m_textLifeNum.setString(std::to_string(m_life));
     std::cout << "kkkk \n";
-    GameControl::m_restartGame = true;
+    //GameControl::m_restartGame = true;
 }
 
 //Gift
 void Robot::handleCollision(Gift& gameObject)
 {
-    m_life++;
+    //m_life++;
     m_textLifeNum.setString(std::to_string(m_life));
 }
 //==============================================
@@ -191,11 +196,8 @@ void Robot::handleCollision(Rock& gameObject)
 //MovingExplod
 void Robot::handleCollision(MovingExplod& gameObject)//need to check if si dead
 {
-    m_life--;
-    m_position = m_firstPosition;
-    m_Object.setPosition(m_firstPosition);
+    m_life-=1;
     m_textLifeNum.setString(std::to_string(m_life));
-
     GameControl::m_restartGame = true;
 }
 
@@ -212,7 +214,10 @@ sf::Sprite& Robot::getSprit()
     return m_Object;
 }
 
-void Robot::ResetLocition()
-{
+ 
 
+//====================================
+int Robot::getLife() 
+{
+    return m_life;
 }

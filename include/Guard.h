@@ -34,9 +34,10 @@ public:
     void freeze(int duration);                     // הקפאת השומר למשך זמן
     void updateFreezeStatus();                     // עדכון סטטוס הקפאה
     virtual void draw(sf::RenderWindow& window) override; // ציור השומר בחלון
-    virtual void ResetLocition() override;
+    virtual void setFirstLoc() override;
   
-    bool isColliding(const sf::Vector2f& newPos, const GameObject& other) const;
+    void setfreezeDuration(int deltaTime);
+    bool isColliding(const sf::Vector2f& newPos,   GameObject& other) const;
     void moveTowards(sf::Vector2f target, float deltaTime, std::vector<std::unique_ptr<GameObject>>& objects);
      
     void move(sf::Vector2f Robot_loc, float deltatime) override; // תנועה לכיוון הרובוט
@@ -58,13 +59,14 @@ public:
     virtual void handleCollision(Door& gameObject) {};
 
 private:
-    sf::Vector2f m_firstPosition;
+
+   
     sf::Vector2f uniqueOffset;  // נקודת יעד ייחודית לכל שומר
     sf::Vector2f randomOffset; // פקטור רנדומלי ייחודי לשומר
     float moveSpeed = 50.f;
     float offsetRange = 100.0f;
     bool frozen;               // האם השומר קפוא
-    int freezeDuration;       // משך הזמן שהשומר קפוא
+    int freezeDuration ;       // משך הזמן שהשומר קפוא
     bool m_canMove = false;
 };
 

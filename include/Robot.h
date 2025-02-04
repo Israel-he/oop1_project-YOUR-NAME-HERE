@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "MovingObject.h"
 #include "Wall.h"
+
 //#include "GameControl.h"
 class Robot :public MovingObject
 {
@@ -16,12 +17,13 @@ public:
 
 
 	void move(sf::Vector2f position, float deltaTime) override;
-
+	void setFirstLoc();
 
 	//captureLocition
 	void captuareLocition();//move the robot to the (% 50)
 
-	virtual void ResetLocition() override;
+	 
+  
 	//point==================
 	void setPoint(int point);
 	int getPoint();
@@ -32,7 +34,7 @@ public:
 	sf::Vector2f getPosition();
 	//=========================
 	void roundLoction();
-
+	int getLife();
 	void setLife(int life);
 	//check collisions
 	//bool checkCollision(float deltaTime);

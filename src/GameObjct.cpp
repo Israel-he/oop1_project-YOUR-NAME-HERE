@@ -1,18 +1,19 @@
 #include "GameObject.h"
 
 GameObject::GameObject(const sf::Vector2f& pos, const char type)
-    :m_position(pos)//,m_loadTexture(*(new LoadTexture))
+    :m_position(pos), m_isDispose(false)//,m_loadTexture(*(new LoadTexture))
 {
     m_Object.setTexture(m_loadTexture.getTexture(type));
     m_Object.setPosition(m_position);
 }
 
+LoadTexture GameObject::m_loadTexture = LoadTexture();
 //====================================
  
-
-sf::Sprite& GameObject::getSprit() const {
-    return const_cast<sf::Sprite&>(m_Object); // Return the sprite
-}
+//
+//sf::Sprite& GameObject::getSprit() const {
+//    return const_cast<sf::Sprite&>(m_Object); // Return the sprite
+//}
 
 bool GameObject::checkCollision(const GameObject& other) const
 {

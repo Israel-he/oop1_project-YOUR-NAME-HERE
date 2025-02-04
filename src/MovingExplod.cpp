@@ -56,6 +56,10 @@ void MovingExplod::ResetLocition()
 {
 	m_isDispose = true;
 }
+bool MovingExplod::getIsdispose()
+{
+	return m_isDispose;
+}
 //============================
 //collision
 void MovingExplod::handleCollision(GameObject& gameObject)
@@ -69,8 +73,8 @@ void MovingExplod::handleCollision(Robot& gameObject)
 	if (m_Object.getGlobalBounds().intersects(gameObject.getSprit().getGlobalBounds()))
 	{
 		GameControl::m_restartGame = true;
+		m_isDispose = true;
 		gameObject.handleCollision(*this);
-		 
 	}
 }
 

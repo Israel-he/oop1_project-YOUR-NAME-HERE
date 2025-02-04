@@ -6,7 +6,7 @@
 #include <MainMenu.h>
 // Constructor
 Guard::Guard(sf::Vector2f position, const char type)
-    :MovingObject(position, type), frozen(false), freezeDuration(0), m_firstPosition(position)
+    :MovingObject(position, type), frozen(false), freezeDuration(0)
 {
     randomOffset.x = static_cast<float>(rand() % 101 - 50) / 50.0f * randomnessFactor;
     randomOffset.y = static_cast<float>(rand() % 101 - 50) / 50.0f * randomnessFactor;
@@ -20,7 +20,7 @@ void Guard::draw(sf::RenderWindow& window)
     window.draw(m_Object);
 }
 //========================
-void Guard::ResetLocition()
+void Guard::setFirstLoc()
 {
     m_position = m_firstPosition;
     m_Object.setPosition(m_firstPosition);
@@ -261,8 +261,13 @@ void Guard::moveTowards(sf::Vector2f target, float deltaTime,   std::vector<std:
     }
 }
 
-
-bool Guard::isColliding(const sf::Vector2f& newPos, const GameObject& other) const {
+//===================================
+void Guard::setfreezeDuration(int deltaTime)
+{
+    freezeDuration = deltaTime;
+}
+//======================================
+bool Guard::isColliding(const sf::Vector2f& newPos,   GameObject& other) const {
     // קבלת הגבולות של הריבוע החוסם של האובייקט הנוכחי
     sf::FloatRect thisBounds = m_Object.getGlobalBounds();
 

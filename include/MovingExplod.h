@@ -17,6 +17,7 @@ public:
 	void move(sf::Vector2f position, float deltaTime);
 	sf::Vector2f roundLoction(sf::Vector2f position);
 	virtual void ResetLocition() override;
+	virtual bool getIsdispose();
 
 	//check collisions
 	//bool checkCollision(float deltaTime);

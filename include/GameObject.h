@@ -23,8 +23,8 @@ public:
 	virtual ~GameObject() {};
 	virtual void draw(sf::RenderWindow& window) = 0;
 	 
-    sf::Sprite& getSprit();
-    sf::Sprite& getSprit() const;
+   virtual sf::Sprite& getSprit();
+   //virtual sf::Sprite& getSprit() const;
 	//get and set positions=====================
 	void setPosition(const sf::Vector2f& newPos);
     sf::Vector2f getPosition() const;
@@ -50,8 +50,8 @@ protected:
 	
 	sf::Vector2f m_position;
 	sf::Sprite m_Object;
-	bool m_isDispose = false;
+	bool m_isDispose;
 
 private:
-	LoadTexture m_loadTexture;
+	static LoadTexture m_loadTexture;
 };

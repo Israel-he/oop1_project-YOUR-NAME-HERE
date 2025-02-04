@@ -37,6 +37,9 @@ public:
 	void iniwindow();
 	//===========================
 
+	//sound
+	void loudSound();
+
 	//Read the file
 	void readFile();
 	void switchObject(const char symbol, sf::Vector2f locition);
@@ -54,16 +57,17 @@ public:
 
 	//draw
 	void draw();
-
+	 
+	void colisitionGift();
 	void creatMoveExplod(sf::Vector2f position);
 
 	void checkIfReset();
 
-	/*void Random_Gift();
+	void Random_Gift();
 	void updateFreezeStatus(float deltaTime);
 	void froze_Guards(int timeFrozen);
 	void remove_guard();
-	void endGame();*/
+	void endGame();
 private:
 	sf::Vector2f m_position;//move robot
 	sf::RenderWindow m_window;
@@ -79,7 +83,8 @@ private:
 	sf::Clock m_clock;
 	float m_deltaTime;
 
-
+	//sound
+	sf::Music m_sound;
 
 	//Moving objects
 	std::unique_ptr<MovingObject> m_robot;
@@ -87,8 +92,10 @@ private:
 	std::vector<std::unique_ptr<MovingObject>> m_MovingExplod;//std::vector<std::unique_ptr<Bomb>> m_bomb;
 
 	//unMoving objects
-	std::vector<std::unique_ptr<GameObject>> m_objects;//std::vector<std::unique_ptr<Gift>> m_gift;
+	std::vector<std::unique_ptr<GameObject>> m_objects;
 	std::vector<std::unique_ptr<Bomb>> m_bomb;
+	std::vector<std::unique_ptr<Gift>> m_gift;
 
-
+	sf::SoundBuffer m_bufferExplod;
+	sf::Sound m_soundExplod;
 };

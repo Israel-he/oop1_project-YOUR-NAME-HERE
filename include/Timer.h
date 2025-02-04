@@ -1,9 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Font.hpp>
-#include <SFML/Graphics/Text.hpp> 
-#include <SFML/System/Export.hpp>
-#include <SFML/System/Utf.hpp>
+ 
 #include <iterator>
 #include <locale> // Add this line
 #include <string>
@@ -15,9 +12,8 @@ public:
 
 	void updateTime(float time);
 	void draw(sf::RenderWindow& window);
-
-
-
+	int getMinute(); 
+	void addTime(int num);
 private:
 	int m_countSecond = 0;
 	int m_countMinute = 0;

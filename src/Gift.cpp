@@ -5,11 +5,11 @@ Gift::Gift(sf::Vector2f position, const char type)
 {
 }
 
-sf::Sprite& Gift::gatSprite()
+ 
+sf::Sprite& Gift::getSprit()
 {
-	return m_Object;
+	return m_Object; // החזרת הספירייט של האובייקט
 }
-
 
 void Gift::draw(sf::RenderWindow& window)
 {
@@ -22,8 +22,7 @@ void Gift::handleCollision(Robot& gameObject)
 	if (m_Object.getGlobalBounds().intersects(gameObject.getSprit().getGlobalBounds()))
 	{
 		m_isDispose = true;
-		gameObject.handleCollision(*this);
-
+		//gameObject.handleCollision(*this);
 	}
 
 	return;
