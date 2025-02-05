@@ -23,5 +23,5 @@ private:
 	sf::Texture m_explosion_right;
 	sf::Texture m_explosion_left;
 	sf::Texture m_explosion;
-	sf::Texture  m_life;
+	sf::Texture  m_gift;
 };

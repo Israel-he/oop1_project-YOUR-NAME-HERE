@@ -65,6 +65,9 @@ private:
 
 	sf::Font m_fontPoint;
 	sf::Text m_textPoint;
+
+	sf::Font m_fontLevel;
+	sf::Text m_textLevel;
 };
 
 

@@ -3,21 +3,30 @@
 #include <iostream>
 using namespace std;
 bool GameControl::m_restartGame = false;
+information GameControl::info;
+
 //c_tor
 GameControl::GameControl()
-	:inputFile("Board.txt"), m_videoMode(800, 800)
+	:m_videoMode(800, 800), m_files() 
 {
-	iniwindow();
-	readFile(); 
+	/*iniwindow();
+	readFile(); */
+	startGame();
 	loudSound();
-	
-
 } 
 
 //====================window====================
 void GameControl::iniwindow()
 {
 	m_window.create(m_videoMode, "My first game", sf::Style::Titlebar | sf::Style::Close);
+}
+//====================================
+void GameControl::startGame()
+{
+	endGame();
+	iniwindow();
+	readFile();
+	info.m_nextLevel = false;
 }
 
 //====================CheckIfFileOpen==============
@@ -32,8 +41,7 @@ void GameControl::loudSound()
 	m_sound.setLoop(true);
 	m_sound.play();
 
-	m_bufferExplod.loadFromFile("expl (1)");
-	m_soundExplod.setLoop(true);
+	m_bufferExplod.loadFromFile("expl.wav");
 	m_soundExplod.setBuffer(m_bufferExplod);
 }
 
@@ -42,7 +50,7 @@ void GameControl::readFile()
 {
 	char ObjType;
 	int row = 0, col = 0;
-	while (inputFile.get(ObjType))
+	while (m_files.getNewLevel(info.m_level).get(ObjType))
 	{
 		if (ObjType == '\n')
 		{
@@ -55,7 +63,7 @@ void GameControl::readFile()
 			col++;
 		}
 	}
-	inputFile.close();
+	m_files.getNewLevel(info.m_level).close();
 }
 
 void GameControl::switchObject(const char symbol, sf::Vector2f locition)
@@ -80,9 +88,9 @@ void GameControl::switchObject(const char symbol, sf::Vector2f locition)
 	case ID::BOMB:
 		m_objects.push_back(std::make_unique<Bomb>(locition, ID::BOMB));
 		break;
-	case ID::LIFE:
-		m_gift.push_back(std::make_unique<Gift>(locition, ID::LIFE));
-		m_objects.push_back(std::make_unique<Wall>(locition, ID::WALL));
+	case ID::GIFT:
+		m_gift.push_back(std::make_unique<Gift>(locition, ID::GIFT));
+		//m_objects.push_back(std::make_unique<Wall>(locition, ID::WALL));
 		break;
 	}
 }
@@ -233,7 +241,19 @@ void GameControl::checkCollision(GameObject& gameObject)
 	//unmoving with the moving
 	for (auto& unmovable : m_objects)
 	{
-		gameObject.handleCollision(*unmovable);
+		if (!info.m_nextLevel)
+			gameObject.handleCollision(*unmovable);
+		else//when you get to the door
+		{
+			
+			m_objects.clear();
+			m_gift.clear();
+			m_MovingExplod.clear();
+			m_guard.clear();
+			startGame();
+			return;
+		}
+		
 	}
 
 	for (auto& gift : m_gift)

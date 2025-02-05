@@ -18,7 +18,7 @@ Robot::Robot(sf::Vector2f position,const char type)
     m_textLifePoint.setCharacterSize(30);
     m_textLifePoint.setFont(m_fontLifePoint);
     m_textLifePoint.setFillColor(sf::Color::White);
-    m_textLifePoint.setString("Life:     Point:       Game time one minute:");
+    m_textLifePoint.setString("Life:     Point:       Game time one minute:         Level:");
     m_textLifePoint.setPosition(20.f, 10.f);
 
     m_fontPoint.loadFromFile("arial.ttf");
@@ -28,6 +28,12 @@ Robot::Robot(sf::Vector2f position,const char type)
     m_textPoint.setString(std::to_string(m_point));
     m_textPoint.setPosition(200.f, 10.f);
 
+    m_fontLevel.loadFromFile("arial.ttf");
+    m_textLevel.setCharacterSize(30);
+    m_textLevel.setFont(m_fontLevel);
+    m_textLevel.setFillColor(sf::Color::Red);
+    m_textLevel.setString(std::to_string(GameControl::info.m_level+1));
+    m_textLevel.setPosition(715.f, 10.f);
 
 }
 
@@ -38,6 +44,8 @@ void Robot::draw(sf::RenderWindow& window)
     window.draw(m_textLifeNum);
     window.draw(m_textLifePoint);
     window.draw(m_textPoint);
+    window.draw(m_textLevel);
+    
 }
 
 //==================The point=========================
@@ -204,6 +212,9 @@ void Robot::handleCollision(MovingExplod& gameObject)//need to check if si dead
 void Robot::handleCollision(Door& gameObject)
 {
     m_point += 25;
+    GameControl::info.m_level++;
+    GameControl::info.m_robotPoint = m_point;
+    GameControl::info.m_nextLevel = true;
     m_textPoint.setString(std::to_string(m_point));
 }
 

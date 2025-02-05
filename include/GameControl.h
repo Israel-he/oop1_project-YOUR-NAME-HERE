@@ -20,12 +20,18 @@
 #include "Gift.h"
 #include "MovingExplod.h"
 #include <MainMenu.h>
-
- 
+#include "ReadFile.h"
+struct information
+{
+	int m_level;
+	int m_robotPoint;
+	bool m_nextLevel = false;
+};
 
 class GameControl
 {
 public:
+	
 
 	//C-tor & D-tor
 	GameControl();
@@ -36,7 +42,7 @@ public:
 	bool windowIsOpen()const;
 	void iniwindow();
 	//===========================
-
+	void startGame();
 	//sound
 	void loudSound();
 
@@ -68,14 +74,17 @@ public:
 	void froze_Guards(int timeFrozen);
 	void remove_guard();
 	void endGame();
+
+	
+	static information info;
 private:
 	sf::Vector2f m_position;//move robot
 	sf::RenderWindow m_window;
 	sf::VideoMode m_videoMode;
 
 	//ReadFile
-	std::ifstream inputFile;
-
+    ReadFile m_files;
+	
 	sf::Event m_event;
 
 	Timer m_timer;
@@ -85,6 +94,8 @@ private:
 
 	//sound
 	sf::Music m_sound;
+	sf::SoundBuffer m_bufferExplod;
+	sf::Sound m_soundExplod;
 
 	//Moving objects
 	std::unique_ptr<MovingObject> m_robot;
@@ -96,6 +107,5 @@ private:
 	std::vector<std::unique_ptr<Bomb>> m_bomb;
 	std::vector<std::unique_ptr<Gift>> m_gift;
 
-	sf::SoundBuffer m_bufferExplod;
-	sf::Sound m_soundExplod;
+
 };

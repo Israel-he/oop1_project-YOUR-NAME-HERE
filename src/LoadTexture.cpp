@@ -15,7 +15,7 @@ LoadTexture::LoadTexture()
     m_explosion_right.loadFromFile("explosion_right.jpg");
     m_explosion_left.loadFromFile("explosion_left.jpg");
     m_explosion.loadFromFile("explosion.jpg");
-    m_life.loadFromFile("life.png");
+    m_gift.loadFromFile("gift.jpg");
 }
 
 sf::Texture& LoadTexture::getTexture(const char symbol)
@@ -43,8 +43,8 @@ sf::Texture& LoadTexture::getTexture(const char symbol)
     case ID::BOMB_explode:
         return m_explosion;
         break;
-    case ID::LIFE:
-        return m_life;
+    case ID::GIFT:
+        return m_gift;
         break;
     }
 }

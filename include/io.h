@@ -8,5 +8,5 @@ namespace ID
     constexpr char ROCK = '@';
     constexpr char BOMB = 'b';
     constexpr char BOMB_explode = 'e';
-    constexpr char LIFE = 'p';
+    constexpr char GIFT = 'p';
 }
