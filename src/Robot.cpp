@@ -18,7 +18,7 @@ Robot::Robot(sf::Vector2f position,const char type)
     m_textLifePoint.setCharacterSize(30);
     m_textLifePoint.setFont(m_fontLifePoint);
     m_textLifePoint.setFillColor(sf::Color::White);
-    m_textLifePoint.setString("Life:     Point:       Game time one minute:         Level:");
+    m_textLifePoint.setString("Life:     Point:       Game time two minute:         Level:");
     m_textLifePoint.setPosition(20.f, 10.f);
 
     m_fontPoint.loadFromFile("arial.ttf");

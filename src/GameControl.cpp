@@ -90,7 +90,7 @@ void GameControl::switchObject(const char symbol, sf::Vector2f locition)
 		break;
 	case ID::GIFT:
 		m_gift.push_back(std::make_unique<Gift>(locition, ID::GIFT));
-		//m_objects.push_back(std::make_unique<Wall>(locition, ID::WALL));
+		m_objects.push_back(std::make_unique<Wall>(locition, ID::WALL));
 		break;
 	}
 }
@@ -158,9 +158,16 @@ void GameControl::run()
 	m_robot->move(m_position, m_deltaTime);// m_position no reason
 	
 	checkCollision(*m_robot);
-	if (m_timer.getMinute() >= 1/* || m_robot->getLife()<=0*/) 
+	if (m_timer.getMinute() >= 2 || m_robot->getLife()<=0) 
 	{
+		 
 		endGame();
+	/*	m_objects.clear();
+		m_gift.clear();
+		m_MovingExplod.clear();
+		m_guard.clear();
+		m_timer.restartTime();*/
+		startGame();
 		return;
 	}
 
@@ -250,6 +257,7 @@ void GameControl::checkCollision(GameObject& gameObject)
 			m_gift.clear();
 			m_MovingExplod.clear();
 			m_guard.clear();
+			m_timer.restartTime();
 			startGame();
 			return;
 		}

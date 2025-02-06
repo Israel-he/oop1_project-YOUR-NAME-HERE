@@ -14,6 +14,7 @@ public:
 	void draw(sf::RenderWindow& window);
 	int getMinute(); 
 	void addTime(int num);
+	void restartTime();
 private:
 	int m_countSecond = 0;
 	int m_countMinute = 0;

@@ -66,3 +66,12 @@ void Timer::addTime(int num)
 	if (m_countSecond < 0)
 		m_countSecond = 0;
 }
+
+void Timer::restartTime()
+{
+	m_countSecond = 0;
+	m_countMinute = 0;
+	m_TextMinute.setString(std::to_string(m_countSecond));
+	m_TextMinute.setString(std::to_string(m_countMinute));
+
+}
